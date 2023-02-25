@@ -27,14 +27,10 @@
 
 <h1 class="text-2xl font-bold mb-2">Latest Discussion</h1>
 <Search />
-{#if $user.id != 0}
-	<Button class="border-white border mt-1 hover:border-transparent transition-all outline-none"
-		>Create Post</Button
-	>
-{/if}
+
 <div class="grid grid-cols-1 md:grid-cols-2 gap-2 py-2">
 	{#each categories as category}
-		<a href="/forums/{category.id}">
+		<a href="/main/forums/{category.id}">
 			<Tile class="hover:-translate-y-2 transition-all">
 				<div class="md:flex justify-between items-center">
 					<div>

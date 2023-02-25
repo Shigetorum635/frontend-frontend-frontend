@@ -80,7 +80,7 @@
 	  <SideNavLink href="/login" icon={User} text='{$user.username} Profile' />
 	  {:else}
 	  <SideNavLink href="/login" icon={User} text="Log In" />
-	  <SideNavLink href="/login" icon={Login} text="Sign Up" />
+	  <SideNavLink href="/register" icon={Login} text="Sign Up" />
 	  {/if}
 	</SideNavItems>
   </SideNav>

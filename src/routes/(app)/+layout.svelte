@@ -78,11 +78,11 @@
 	  <SideNavDivider />
 	  {#if $user.id != 0}
 	  <SideNavLink href="/main/me" icon={User} text='{$user.username} Profile' />
-	  <SideNavLink href="/main/me" icon={Logout} text='Log Out' on:click={() => {logout()}} />
+	  <SideNavLink href="/login" icon={Logout} text='Log Out' on:click={() => {logout()}} />
 
 	  {:else}
 	  <SideNavLink href="/login" icon={User} text="Log In" />
-	  <SideNavLink href="/login" icon={Login} text="Sign Up" />
+	  <SideNavLink href="/register" icon={Login} text="Sign Up" />
 	  {/if}
 	</SideNavItems>
   </SideNav>
