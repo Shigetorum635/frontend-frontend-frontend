@@ -1,11 +1,8 @@
 <script>
-	// @ts-ignore
-	import { onMount } from 'svelte';
 	import { Button, TextInput, TextArea } from 'carbon-components-svelte';
-	import { goto } from '$app/navigation';
-	import { user } from '../../../../../../stores/user';
 	import { page } from '$app/stores';
 	import { env } from '$env/dynamic/public';
+	import { goto } from '$app/navigation';
 
 	let title = '';
 	let content = '';
@@ -26,30 +23,29 @@
 		switch (response.status) {
 			case 400:
 				console.log(`I say Incorrect credentials because I am status ${response.status}`);
-				error = 'Account already exists!';
-				break;
+				error = 'Incorrect post format.';
 			case 404:
 				console.log(`I say Account not found because I am status ${response.status}`);
 				error = 'Account not found!';
-				break;
 			case 500:
 				console.log(`I say Server Error because I am status ${response.status}`);
 				error = 'Server Error!';
 				break;
 		}
-        const data = await response.json()
-        console.log(data)
-	};
+		const data = await response.json();
+		error = data.message;
 
-	onMount(() => {
-		if ($user.id == 0) {
-			goto('/main');
+		if (response.status === 200) {
+			setTimeout(() => {
+				goto(`/main/forums/${$page.params.slug}/${data.thread.id}`);
+			}, 3000);
 		}
-	});
+	};
 </script>
 
 <a href="/main/forums"><Button>Go Back</Button></a>
 <div class="w-2/3 ">
+	<div class="text-xl my-2">Create forum post</div>
 	{#if error != ''}
 		<div class="p-2 border-t-4 border-red-600 bg-white text-black">
 			<div class="text-sm">{error}</div>

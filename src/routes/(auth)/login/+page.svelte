@@ -56,8 +56,8 @@
 	};
 
 	onMount(() => {
-		if($user.id != 0){
-			goto('/main')
+		if ($user.id != 0) {
+			goto('/main');
 		}
 	});
 </script>

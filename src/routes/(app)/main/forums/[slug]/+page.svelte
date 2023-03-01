@@ -3,7 +3,7 @@
 
 	import { page } from '$app/stores';
 	import { env } from '$env/dynamic/public';
-	import { Button } from 'carbon-components-svelte';
+	import { Button, Tile } from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
 	import { user } from '../../../../../stores/user';
 	let error = '';
@@ -27,20 +27,27 @@
 		const data = await response.json();
 		console.log(data);
 		threads = data.threads;
-		console.log(threads)
+		console.log(threads);
 	});
 </script>
 
 <div class="flex gap-4">
 	<a href="/main/forums"><Button>Go Back</Button></a>
 	{#if $user.id != 0}
-		<a href="/main/forums/{$page.params.slug}/new"><Button class="border-white border mt-1 hover:border-transparent transition-all outline-none">Create Post</Button></a>
+		<a href="/main/forums/{$page.params.slug}/new"
+			><Button class="border-white border mt-1 hover:border-transparent transition-all outline-none"
+				>Create Post</Button
+			></a
+		>
 	{/if}
 </div>
-{#each threads as thread}
-	<Tile>
-		<div class="flex items-center justify-between">
-			{thread.title}
-		</div>
-	</Tile>
-{/each}
+<div class="grid gap-2 grid-cols-1 mt-4">
+	{#each threads as thread}
+		<a href="/main/forums/{$page.params.slug}/{thread.id}"
+			><Tile>
+				<div class="text-lg">{thread.title}</div>
+				<div class="">{thread.content.substring(0, 40)}...</div>
+			</Tile></a
+		>
+	{/each}
+</div>

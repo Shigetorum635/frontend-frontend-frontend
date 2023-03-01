@@ -16,7 +16,17 @@
 		Content
 	} from 'carbon-components-svelte';
 	import { env } from '$env/dynamic/public';
-	import { Fade, LogoGithub, LogoDiscord, User, Logout, Forum, Home, Earth, Login } from 'carbon-icons-svelte';
+	import {
+		Fade,
+		LogoGithub,
+		LogoDiscord,
+		User,
+		Logout,
+		Forum,
+		Home,
+		Earth,
+		Login
+	} from 'carbon-icons-svelte';
 	import { user } from '../../stores/user';
 	import { onMount } from 'svelte';
 	onMount(async () => {
@@ -29,11 +39,11 @@
 			}
 		});
 
-		if(!response.ok || response.status != 200) return;
+		if (!response.ok || response.status != 200) return;
 		const data = await response.json();
-		console.log(data)
+		console.log(data);
 
-		user.set(data.user)
+		user.set(data.user);
 	});
 	let isSideNavOpen = false;
 	const logout = async () => {
@@ -56,36 +66,40 @@
 	};
 </script>
 
-
 <Header company="Penguin Logistics" platformName="ANOMIA" bind:isSideNavOpen>
 	<svelte:fragment slot="skip-to-content">
-	  <SkipToContent />
+		<SkipToContent />
 	</svelte:fragment>
-  </Header>
-  
-  <SideNav bind:isOpen={isSideNavOpen}>
+</Header>
+
+<SideNav bind:isOpen={isSideNavOpen}>
 	<SideNavItems>
-	  <SideNavLink icon={Home} href="/main" text="Homepage" />
-	  <SideNavLink icon={Forum} href="/main/forums" text="Forums" loading=true />
-	  <SideNavLink icon={Earth} href="/main/wwn" text="WW News" />
-	  <SideNavMenu icon={Fade} text="SBC">
-		<SideNavMenuItem  href="/sbc/listings" text="Listings" />
-		<SideNavMenuItem href="/sbc/news" text="SBC News" />
-		<SideNavMenuItem href="/sbc/advertising" text="Advertising" />
-	  </SideNavMenu>
-	  <SideNavDivider />
-	  <SideNavLink href="discordlinkidk" icon={LogoDiscord} text="Discord" />
-	  <SideNavDivider />
-	  {#if $user.id != 0}
-	  <SideNavLink href="/main/me" icon={User} text='{$user.username} Profile' />
-	  <SideNavLink href="/login" icon={Logout} text='Log Out' on:click={() => {logout()}} />
-
-	  {:else}
-	  <SideNavLink href="/login" icon={User} text="Log In" />
-	  <SideNavLink href="/register" icon={Login} text="Sign Up" />
-	  {/if}
+		<SideNavLink icon={Home} href="/main" text="Homepage" />
+		<SideNavLink icon={Forum} href="/main/forums" text="Forums" loading="true" />
+		<SideNavLink icon={Earth} href="/main/wwn" text="WW News" />
+		<SideNavMenu icon={Fade} text="SBC">
+			<SideNavMenuItem href="/sbc/listings" text="Listings" />
+			<SideNavMenuItem href="/sbc/news" text="SBC News" />
+			<SideNavMenuItem href="/sbc/advertising" text="Advertising" />
+		</SideNavMenu>
+		<SideNavDivider />
+		<SideNavLink href="discordlinkidk" icon={LogoDiscord} text="Discord" />
+		<SideNavDivider />
+		{#if $user.id != 0}
+			<SideNavLink href="/main/me" icon={User} text="{$user.username} Profile" />
+			<SideNavLink
+				href="/login"
+				icon={Logout}
+				text="Log Out"
+				on:click={() => {
+					logout();
+				}}
+			/>
+		{:else}
+			<SideNavLink href="/login" icon={User} text="Log In" />
+			<SideNavLink href="/register" icon={Login} text="Sign Up" />
+		{/if}
 	</SideNavItems>
-  </SideNav>
+</SideNav>
 
-<Content><slot /></Content>	
-
+<Content><slot /></Content>
