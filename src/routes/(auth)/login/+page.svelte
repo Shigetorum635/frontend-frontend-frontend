@@ -1,8 +1,8 @@
 <script>
-	import { goto } from '$app/navigation';
-
 	// @ts-nocheck
 
+	import { goto } from '$app/navigation';
+	import { Recaptcha, recaptcha, observer } from 'svelte-recaptcha-v2';
 	import { env } from '$env/dynamic/public';
 	import { FluidForm, TextInput, PasswordInput, Link, Button } from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
@@ -12,15 +12,37 @@
 
 	let password = '';
 	let username = '';
-	let error = '';
-	let hasErrored = error === '' ? false : true;
+	let captchaResponse = '';
+	const onCaptchaReady = (event) => {
+		console.log('This is ready');
+	};
+
+	const onCaptchaSuccess = (event) => {
+		console.log('token received: ' + event.detail.token);
+		captchaResponse = event.detail.token;
+	};
+
+	const onCaptchaError = (event) => {
+		console.log('recaptcha init has failed.');
+	};
+
+	const onCaptchaExpire = (event) => {
+		console.log('recaptcha api has expired');
+	};
+
+	const onCaptchaOpen = (event) => {
+		console.log('google decided to challange the user');
+	};
+
+	const onCaptchaClose = (event) => {
+		console.log('google decided to challange the user');
+	};
 	const login = async () => {
+
 		if (!regex.test(username)) return (error = 'Please fill in the username properly!');
 		if (password.length <= 3)
 			return (error = "Invalid Password! Make sure you type one that's minimally valid!");
-
-		const body = JSON.stringify({ username, password });
-
+		const body = JSON.stringify({ username, password, captchaResponse });
 		const response = await fetch(`${env.PUBLIC_URL}:${env.PUBLIC_PORT}/user/login`, {
 			method: 'POST',
 			credentials: 'include',
@@ -81,8 +103,19 @@
 				placeholder="Enter password..."
 			/>
 		</FluidForm>
+		<Recaptcha
+			sitekey={env.PUBLIC_CAPTCHA}
+			badge={'inline'}
+			size={'invisible'}
+			on:success={onCaptchaSuccess}
+			on:error={onCaptchaError}
+			on:expired={onCaptchaExpire}
+			on:close={onCaptchaClose}
+			on:ready={onCaptchaReady}
+		/>
 		<div class="flex justify-between">
-			<Button on:click={() => login()} class="w-full border border-white hover:border-transparent"
+			<Button on:click={() => {recaptcha.execute()
+				login()}} class="w-full border border-white hover:border-transparent"
 				>Login</Button
 			>
 		</div>

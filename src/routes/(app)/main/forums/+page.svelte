@@ -4,8 +4,6 @@
 	import { env } from '$env/dynamic/public';
 	import { Search, Tile, PaginationNav, Button } from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
-	import { user } from '../../../../stores/user';
-	let error = '';
 	let categories = [];
 	onMount(async () => {
 		const response = await fetch(`${env.PUBLIC_URL}:${env.PUBLIC_PORT}/forums/categories`, {

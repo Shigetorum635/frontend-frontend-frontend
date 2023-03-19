@@ -1,7 +1,8 @@
 <script>
+	// @ts-nocheck
 	import { goto } from '$app/navigation';
 
-	// @ts-nocheck
+	import { Recaptcha, recaptcha, observer } from 'svelte-recaptcha-v2';
 
 	import { env } from '$env/dynamic/public';
 	import {
@@ -26,6 +27,33 @@
 	let error = '';
 	let success = '';
 	let hasErrored = error === '' ? false : true;
+
+	let captchaResponse = '';
+	const onCaptchaReady = (event) => {
+		console.log('This is ready');
+	};
+
+	const onCaptchaSuccess = (event) => {
+		console.log('token received: ' + event.detail.token);
+		captchaResponse = event.detail.token;
+	};
+
+	const onCaptchaError = (event) => {
+		console.log('recaptcha init has failed.');
+	};
+
+	const onCaptchaExpire = (event) => {
+		console.log('recaptcha api has expired');
+	};
+
+	const onCaptchaOpen = (event) => {
+		console.log('google decided to challange the user');
+	};
+
+	const onCaptchaClose = (event) => {
+		console.log('google decided to challange the user');
+	};
+
 	const register = async () => {
 		if (password != password_2)
 			return (error = 'Password mismatch! Make sure to type the same one.');
@@ -33,7 +61,7 @@
 		if (password.length <= 3)
 			return (error = "Invalid Password! Make sure you type one that's minimally valid!");
 
-		const body = JSON.stringify({ username, password });
+		const body = JSON.stringify({ username, password, captchaResponse });
 		loading = true;
 		const response = await fetch(`${env.PUBLIC_URL}:${env.PUBLIC_PORT}/user/register`, {
 			method: 'POST',
@@ -111,6 +139,16 @@
 				By signing up, you agree to Anomia's Terms of Use, Privacy Policy and Cookie Policy
 			</div>
 		</FluidForm>
+		<Recaptcha
+			sitekey={env.PUBLIC_CAPTCHA}
+			badge={'inline'}
+			size={'invisible'}
+			on:success={onCaptchaSuccess}
+			on:error={onCaptchaError}
+			on:expired={onCaptchaExpire}
+			on:close={onCaptchaClose}
+			on:ready={onCaptchaReady}
+		/>
 		<div class="flex justify-between">
 			<Button
 				on:click={() => register()}

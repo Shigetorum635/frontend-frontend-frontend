@@ -1,15 +1,6 @@
 <script>
 	import {
-		Grid,
-		Row,
-		Column,
 		Tile,
-		ImageLoader,
-		truncate,
-		Tabs,
-		Tab,
-		TabContent,
-		AspectRatio,
 		Link,
 		Button
 	} from 'carbon-components-svelte';
