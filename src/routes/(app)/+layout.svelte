@@ -74,9 +74,9 @@
 
 <SideNav bind:isOpen={isSideNavOpen}>
 	<SideNavItems>
-		<SideNavLink icon={Home} href="/main" text="Homepage" />
-		<SideNavLink icon={Forum} href="/main/forums" text="Forums" loading="true" />
-		<SideNavLink icon={Earth} href="/main/wwn" text="WW News" />
+		<SideNavLink icon={Home} href="/" text="Homepage" />
+		<SideNavLink icon={Forum} href="/forums" text="Forums" loading="true" />
+		<SideNavLink icon={Earth} href="/wwn" text="WW News" />
 		<SideNavMenu icon={Fade} text="SBC">
 			<SideNavMenuItem href="/sbc/listings" text="Listings" />
 			<SideNavMenuItem href="/sbc/news" text="SBC News" />
@@ -86,7 +86,7 @@
 		<SideNavLink href="discordlinkidk" icon={LogoDiscord} text="Discord" />
 		<SideNavDivider />
 		{#if $user.id != 0}
-			<SideNavLink href="/main/me" icon={User} text="{$user.username} Profile" />
+			<SideNavLink href="//me" icon={User} text="{$user.username} Profile" />
 			<SideNavLink
 				href="/login"
 				icon={Logout}

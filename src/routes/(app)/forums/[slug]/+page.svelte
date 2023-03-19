@@ -32,9 +32,9 @@
 </script>
 
 <div class="flex gap-4">
-	<a href="/main/forums"><Button>Go Back</Button></a>
+	<a href="/forums"><Button>Go Back</Button></a>
 	{#if $user.id != 0}
-		<a href="/main/forums/{$page.params.slug}/new"
+		<a href="/forums/{$page.params.slug}/new"
 			><Button class="border-white border mt-1 hover:border-transparent transition-all outline-none"
 				>Create Post</Button
 			></a
@@ -43,7 +43,7 @@
 </div>
 <div class="grid gap-2 grid-cols-1 mt-4">
 	{#each threads as thread}
-		<a href="/main/forums/{$page.params.slug}/{thread.id}"
+		<a href="/forums/{$page.params.slug}/{thread.id}"
 			><Tile>
 				<div class="text-lg">{thread.title}</div>
 				<div class="">{thread.content.substring(0, 40)}...</div>

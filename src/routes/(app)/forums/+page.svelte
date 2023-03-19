@@ -28,7 +28,7 @@
 
 <div class="grid grid-cols-1 md:grid-cols-2 gap-2 py-2">
 	{#each categories as category}
-		<a href="/main/forums/{category.id}">
+		<a href="/forums/{category.id}">
 			<Tile class="hover:-translate-y-2 transition-all">
 				<div class="md:flex justify-between items-center">
 					<div>

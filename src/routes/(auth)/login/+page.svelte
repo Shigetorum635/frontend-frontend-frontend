@@ -74,12 +74,12 @@
 
 		user.set(data);
 
-		return goto('/main');
+		return goto('/');
 	};
 
 	onMount(() => {
 		if ($user.id != 0) {
-			goto('/main');
+			goto('/');
 		}
 	});
 </script>

@@ -5,15 +5,13 @@
 	import { env } from '$env/dynamic/public';
 	import { goto } from '$app/navigation';
 	import { Recaptcha, recaptcha, observer } from 'svelte-recaptcha-v2';
-	import { onMount } from 'svelte';
-
 	let title = '';
 	let content = '';
 	let error = '';
-	let captchaResponse = ""
+	let captchaResponse = '';
 
 	const onCaptchaReady = (event) => {
-		console.log("This is ready");
+		console.log('This is ready');
 	};
 
 	const onCaptchaSuccess = (event) => {
@@ -37,7 +35,7 @@
 		console.log('google decided to challange the user');
 	};
 	const post = async () => {
-		recaptcha.execute()
+		recaptcha.execute();
 		const body = JSON.stringify({ title, content, categoryId: $page.params.slug, captchaResponse });
 		const response = await fetch(`${env.PUBLIC_URL}:${env.PUBLIC_PORT}/forums/create`, {
 			method: 'POST',
@@ -66,13 +64,13 @@
 
 		if (response.status === 200) {
 			setTimeout(() => {
-				goto(`/main/forums/${$page.params.slug}/${data.thread.id}`);
+				goto(`/forums/${$page.params.slug}/${data.thread.id}`);
 			}, 3000);
 		}
 	};
 </script>
 
-<a href="/main/forums"><Button>Go Back</Button></a>
+<a href="/forums"><Button>Go Back</Button></a>
 <div class="w-2/3 ">
 	<div class="text-xl my-2">Create forum post</div>
 	{#if error != ''}
@@ -87,14 +85,14 @@
 	/>
 	<TextArea labelText="Body of the Post" placeholder="Lorem Ipsum... baby!" bind:value={content} />
 	<Recaptcha
-sitekey={env.PUBLIC_CAPTCHA}
-badge={'top'}
-size={'Normal'}
-on:success={onCaptchaSuccess}
-on:error={onCaptchaError}
-on:expired={onCaptchaExpire}
-on:close={onCaptchaClose}
-on:ready={onCaptchaReady}
-/>
+		sitekey={env.PUBLIC_CAPTCHA}
+		badge={'inline'}
+		size={'invisible'}
+		on:success={onCaptchaSuccess}
+		on:error={onCaptchaError}
+		on:expired={onCaptchaExpire}
+		on:close={onCaptchaClose}
+		on:ready={onCaptchaReady}
+	/>
 	<Button label="Send" class="border-white border " on:click={() => post()}>Create</Button>
 </div>

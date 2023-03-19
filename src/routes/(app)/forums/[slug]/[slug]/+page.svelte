@@ -2,7 +2,7 @@
 	// @ts-nocheck
 
 	import { page } from '$app/stores';
-	import { Loading, Tile } from 'carbon-components-svelte';
+	import { Loading, Tile, Button } from 'carbon-components-svelte';
 	import { slide } from 'svelte/transition';
 	import { onMount } from 'svelte';
 	import { writable } from 'svelte/store';
@@ -55,9 +55,7 @@
 		loading = false;
 	});
 </script>
-
-{$page.params.slug}
-
+<a href="/main/forums"><Button>Go Back</Button></a>
 <div transition:slide class="max-w-[800px] mx-auto ">
 	{#if loading == true}
 		<Loading />
@@ -73,7 +71,7 @@
 				/>
 				<div class="bg-gray-200 p-[0.5px] mx-12" />
 				<div class="font-bold text-center">{$post.author.username}</div>
-				<div>Posted on:</div>
+				<div>Posted on: {$post.createdAt}</div>
 			</Tile>
 			<div />
 			<div class="col-span-8 p-1">{$post.body}</div>
