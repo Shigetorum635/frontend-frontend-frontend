@@ -86,7 +86,7 @@
 		<SideNavLink href="discordlinkidk" icon={LogoDiscord} text="Discord" />
 		<SideNavDivider />
 		{#if $user.id != 0}
-			<SideNavLink href="//me" icon={User} text="{$user.username} Profile" />
+			<SideNavLink href="/me" icon={User} text="{$user.username} Profile" />
 			<SideNavLink
 				href="/login"
 				icon={Logout}
