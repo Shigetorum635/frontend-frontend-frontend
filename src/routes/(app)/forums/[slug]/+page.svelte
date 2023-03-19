@@ -5,7 +5,7 @@
 	import { env } from '$env/dynamic/public';
 	import { Button, Tile } from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
-	import { user } from '../../../../../stores/user';
+	import { user } from '../../../../stores/user';
 	let error = '';
 	let threads = [];
 	onMount(async () => {
