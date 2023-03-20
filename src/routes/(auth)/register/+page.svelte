@@ -55,6 +55,7 @@
 	};
 
 	const register = async () => {
+		recaptcha.execute()
 		if (password != password_2)
 			return (error = 'Password mismatch! Make sure to type the same one.');
 		if (!regex.test(username)) return (error = 'Please fill in the username properly!');
